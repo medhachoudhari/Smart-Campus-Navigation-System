@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusSense AI — Smart Campus Navigation System for BIET. Navigate the campus efficiently using AI-powered route planning, shortest-path navigation, and voice assistance.">
+  <title>CampusSense AI — Smart Campus Navigation</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header class="site-header">
+    <nav class="nav" role="navigation" aria-label="Main Navigation">
+      <div class="nav-left">
+        <a class="brand" href="/">CampusSense AI</a>
+      </div>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">
+        <span class="hamburger"></span>
+      </button>
+      <ul id="nav-menu" class="nav-menu" role="menu">
+        <li role="none"><a role="menuitem" href="/">Home</a></li>
+        <li role="none"><a role="menuitem" href="/campus-map">Campus Map</a></li>
+        <li role="none"><a role="menuitem" href="/assistant">Voice Assistant</a></li>
+        <li role="none"><a role="menuitem" href="/about">About Project</a></li>
+      </ul>
+      <div class="nav-right">
+        <label class="dark-toggle" title="Toggle dark/light mode">
+          <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="main">
+
+    <!-- HERO SECTION -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-bg" role="img" aria-hidden="true" style="background-image: url('/static/images/biet-campus.jpg');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-inner">
+        <div class="hero-card">
+          <div class="hero-badge">🏛️ BIET Davangere</div>
+          <h1>CampusSense AI</h1>
+          <p class="subtitle">Smart Campus Navigation System</p>
+          <p class="hero-lead">
+            Navigate BIET Campus efficiently using intelligent route planning, shortest-path navigation,
+            campus search, and AI-powered assistance.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="/campus-map" id="btn-explore">🗺️ Explore Campus</a>
+            <a class="btn btn-ghost" href="/campus-map" id="btn-route">📍 Find Route</a>
+            <a class="btn btn-ghost" href="/assistant" id="btn-assistant">🤖 Talk to Assistant</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" aria-label="Features">
+      <h2 class="section-title">Features</h2>
+      <p class="section-subtitle">Everything you need to navigate the BIET campus with confidence</p>
+      <div class="feature-grid">
+        <article class="feature-card fade-in" id="feat-shortest">
+          <div class="feature-icon">🛤️</div>
+          <h3>Shortest Path Navigation</h3>
+          <p>Find the optimal route between any two campus locations using Dijkstra's algorithm with real walking distances.</p>
+        </article>
+        <article class="feature-card fade-in" id="feat-graph">
+          <div class="feature-icon">🗺️</div>
+          <h3>Interactive Campus Graph</h3>
+          <p>Explore an interactive visualization of the entire BIET campus with buildings, pathways, and real-time route highlighting.</p>
+        </article>
+        <article class="feature-card fade-in" id="feat-search">
+          <div class="feature-icon">🔍</div>
+          <h3>Department Search</h3>
+          <p>Quickly locate any department, facility, or building on campus with instant search and one-click navigation.</p>
+        </article>
+        <article class="feature-card fade-in" id="feat-visitor">
+          <div class="feature-icon">👥</div>
+          <h3>Visitor Assistance</h3>
+          <p>Designed for students, faculty, visitors, parents, and recruiters to navigate the campus effortlessly.</p>
+        </article>
+        <article class="feature-card fade-in" id="feat-access">
+          <div class="feature-icon">♿</div>
+          <h3>Accessibility Support</h3>
+          <p>Wheelchair-friendly route planning that avoids stairs and inaccessible pathways for inclusive navigation.</p>
+        </article>
+        <article class="feature-card fade-in" id="feat-voice">
+          <div class="feature-icon">🎤</div>
+          <h3>Voice Guidance</h3>
+          <p>Speak your destination and get voice-guided directions powered by browser Speech Recognition and AI assistance.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- WHY SECTION -->
+    <section class="why-section" aria-label="Why CampusSense AI">
+      <h2 class="section-title">Why CampusSense AI?</h2>
+      <p class="section-subtitle">Built specifically for the BIET campus experience</p>
+      <div class="why-grid">
+        <div class="why-item fade-in">
+          <span class="why-icon">⚡</span>
+          Saves Time
+        </div>
+        <div class="why-item fade-in">
+          <span class="why-icon">🧭</span>
+          Easy Navigation
+        </div>
+        <div class="why-item fade-in">
+          <span class="why-icon">♿</span>
+          Accessibility Support
+        </div>
+        <div class="why-item fade-in">
+          <span class="why-icon">🏫</span>
+          Campus-wide Coverage
+        </div>
+        <div class="why-item fade-in">
+          <span class="why-icon">🧠</span>
+          Intelligent Route Planning
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">CampusSense AI</div>
+        <p class="footer-text">Smart Campus Navigation System — BIET Davangere</p>
+      </div>
+      <div class="footer-links">
+        <a href="/campus-map">Campus Map</a>
+        <a href="/assistant">Assistant</a>
+        <a href="/about">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
