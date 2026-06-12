@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About CampusSense AI — Learn about the problem identification, Dijkstra's algorithm, complexity analysis, and implementation methodology behind the BIET campus navigation system.">
+  <title>About Project — CampusSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header class="site-header">
+    <nav class="nav" role="navigation" aria-label="Main Navigation">
+      <div class="nav-left">
+        <a class="brand" href="/">CampusSense AI</a>
+      </div>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">
+        <span class="hamburger"></span>
+      </button>
+      <ul id="nav-menu" class="nav-menu" role="menu">
+        <li role="none"><a role="menuitem" href="/">Home</a></li>
+        <li role="none"><a role="menuitem" href="/campus-map">Campus Map</a></li>
+        <li role="none"><a role="menuitem" href="/assistant">Voice Assistant</a></li>
+        <li role="none"><a role="menuitem" href="/about" class="active">About Project</a></li>
+      </ul>
+      <div class="nav-right">
+        <label class="dark-toggle" title="Toggle dark/light mode">
+          <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="main" class="about-page">
+    <h1>About CampusSense AI</h1>
+    <p class="about-subtitle">Smart Campus Navigation System for Bapuji Institute of Engineering and Technology</p>
+
+    <!-- Problem Identification -->
+    <section class="about-section fade-in" id="problem">
+      <h2>Problem Identification</h2>
+      <p>
+        Bapuji Institute of Engineering and Technology (BIET), Davangere, has a sprawling campus with multiple
+        departments, administrative buildings, hostels, and facilities spread across a large area. New students,
+        first-time visitors, parents during admission season, and recruiters during placement drives often face
+        difficulty navigating the campus efficiently.
+      </p>
+      <p>
+        There is no centralized digital navigation tool available for the campus. People rely on asking for
+        directions, which is time-consuming, unreliable, and not accessible for people with mobility challenges.
+        This creates a clear need for an intelligent campus navigation system.
+      </p>
+    </section>
+
+    <!-- Objective -->
+    <section class="about-section fade-in" id="objective">
+      <h2>Objective</h2>
+      <ul>
+        <li>Develop a web-based Smart Campus Navigation System specifically for BIET</li>
+        <li>Implement shortest-path routing using Dijkstra's Algorithm with real campus walking distances</li>
+        <li>Provide an interactive, visual campus graph with all 18 key locations and walking pathways</li>
+        <li>Support wheelchair-accessible route planning for inclusive navigation</li>
+        <li>Integrate an AI-powered assistant for campus FAQs, building information, and route guidance</li>
+        <li>Enable voice-based interaction using browser Speech Recognition API</li>
+        <li>Build a full-stack application with Flask backend and Supabase database</li>
+      </ul>
+    </section>
+
+    <!-- Why Dijkstra's Algorithm -->
+    <section class="about-section fade-in" id="dijkstra">
+      <h2>Why Dijkstra's Algorithm?</h2>
+      <p>
+        Dijkstra's Algorithm is one of the most well-known algorithms for finding the shortest path in a
+        weighted graph. It was chosen for CampusSense AI for the following reasons:
+      </p>
+      <ul>
+        <li><strong>Guaranteed Optimality:</strong> Dijkstra's algorithm always finds the shortest path between any two nodes in a graph with non-negative edge weights</li>
+        <li><strong>Well-Suited for Campus Graphs:</strong> Campus navigation maps are sparse, weighted graphs — exactly the type of problem Dijkstra's excels at solving</li>
+        <li><strong>Efficient Performance:</strong> With a priority queue (min-heap) implementation, the algorithm runs in O((V + E) log V) time, which is efficient for the scale of a campus graph</li>
+        <li><strong>Accessibility Filtering:</strong> The algorithm can easily be modified to skip inaccessible edges, enabling wheelchair-friendly routing without changing the core logic</li>
+        <li><strong>Deterministic Results:</strong> Unlike heuristic-based algorithms (e.g., A*), Dijkstra's guarantees the exact shortest path without requiring a heuristic function</li>
+      </ul>
+    </section>
+
+    <!-- Complexity Analysis -->
+    <section class="about-section fade-in" id="complexity">
+      <h2>Complexity Analysis</h2>
+      <p>
+        The performance of the Dijkstra implementation used in CampusSense AI is analyzed below.
+        With V = number of campus locations (nodes) and E = number of walking pathways (edges):
+      </p>
+      <div class="complexity-grid">
+        <div class="complexity-card">
+          <div class="label">Time Complexity</div>
+          <div class="value">O((V + E) log V)</div>
+          <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">
+            Using a binary min-heap priority queue. Each vertex is extracted once (V log V)
+            and each edge is relaxed once (E log V).
+          </p>
+        </div>
+        <div class="complexity-card">
+          <div class="label">Space Complexity</div>
+          <div class="value">O(V)</div>
+          <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">
+            Storing distance array, predecessor array, visited set, and the priority queue —
+            all proportional to the number of vertices.
+          </p>
+        </div>
+      </div>
+      <p style="margin-top: 20px;">
+        For the BIET campus graph with <strong>V = 18 locations</strong> and <strong>E = 25 pathways</strong>,
+        the algorithm executes in microseconds, providing instant results for any source-destination pair.
+      </p>
+    </section>
+
+    <!-- Implementation Methodology -->
+    <section class="about-section fade-in" id="methodology">
+      <h2>Implementation Methodology</h2>
+      <ul>
+        <li><strong>Frontend:</strong> HTML5, CSS3 (glassmorphism dark theme), and JavaScript with Cytoscape.js for interactive graph visualization</li>
+        <li><strong>Backend:</strong> Python Flask serving REST API endpoints for route computation, location data, and AI chat</li>
+        <li><strong>Database:</strong> Supabase (PostgreSQL) for persistent campus location and route data, with in-memory fallback</li>
+        <li><strong>Algorithm:</strong> Custom Dijkstra implementation in Python (server-side) with priority queue optimization</li>
+        <li><strong>AI Assistant:</strong> Hugging Face Inference API integration with campus-aware system prompt and keyword-matching fallback</li>
+        <li><strong>Voice:</strong> Browser Speech Recognition API for voice input, Web Speech Synthesis API for voice output</li>
+        <li><strong>Graph Data:</strong> 18 campus locations modeled as nodes with 25 bidirectional weighted edges representing walking pathways</li>
+        <li><strong>Accessibility:</strong> Wheelchair-accessible routing mode that filters out edges marked as inaccessible (e.g., stairs)</li>
+      </ul>
+    </section>
+
+    <!-- Future Enhancements -->
+    <section class="about-section fade-in" id="future">
+      <h2>Future Enhancements</h2>
+      <ul>
+        <li>Real-time indoor positioning using Bluetooth Low Energy (BLE) beacons</li>
+        <li>Turn-by-turn walking directions with step-by-step audio guidance</li>
+        <li>Augmented Reality (AR) overlay for visual navigation using the device camera</li>
+        <li>Live event and class schedule integration to suggest routes to upcoming events</li>
+        <li>Multi-floor indoor navigation for multi-story buildings</li>
+        <li>Crowd density estimation to suggest less congested routes</li>
+        <li>Integration with college ERP for personalized timetable-based navigation</li>
+        <li>Native mobile applications for Android and iOS</li>
+        <li>Emergency evacuation routing with real-time alerts</li>
+        <li>Multi-language support for diverse campus visitors</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">CampusSense AI</div>
+        <p class="footer-text">Smart Campus Navigation System — BIET Davangere</p>
+      </div>
+      <div class="footer-links">
+        <a href="/campus-map">Campus Map</a>
+        <a href="/assistant">Assistant</a>
+        <a href="/">Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
