@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive BIET campus map with shortest-path navigation using Dijkstra's Algorithm. Find routes between departments, facilities, and buildings.">
+  <title>Campus Map — CampusSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Cytoscape.js CDN -->
+  <script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+  <style>
+    /* Cytoscape tooltip */
+    #cy-tooltip {
+      position: absolute;
+      display: none;
+      background: rgba(10, 14, 26, 0.92);
+      backdrop-filter: blur(10px);
+      color: #e8edf5;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 100;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      white-space: nowrap;
+    }
+    .light #cy-tooltip {
+      background: rgba(255,255,255,0.95);
+      color: #0f172a;
+      border-color: rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#cy">Skip to map</a>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header class="site-header">
+    <nav class="nav" role="navigation" aria-label="Main Navigation">
+      <div class="nav-left">
+        <a class="brand" href="/">CampusSense AI</a>
+      </div>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">
+        <span class="hamburger"></span>
+      </button>
+      <ul id="nav-menu" class="nav-menu" role="menu">
+        <li role="none"><a role="menuitem" href="/">Home</a></li>
+        <li role="none"><a role="menuitem" href="/campus-map" class="active">Campus Map</a></li>
+        <li role="none"><a role="menuitem" href="/assistant">Voice Assistant</a></li>
+        <li role="none"><a role="menuitem" href="/about">About Project</a></li>
+      </ul>
+      <div class="nav-right">
+        <label class="dark-toggle" title="Toggle dark/light mode">
+          <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MAP DASHBOARD ===== -->
+  <div class="map-layout">
+
+    <!-- LEFT: Graph Visualization (70%) -->
+    <main class="map-main">
+      <div id="cy" aria-label="BIET Campus Navigation Graph" role="img"></div>
+      <div id="cy-tooltip"></div>
+      <div class="map-overlay">
+        <div class="map-title">BIET Campus Navigation Graph</div>
+        <div class="map-instructions">Click nodes for details • Use dropdowns to find routes</div>
+      </div>
+    </main>
+
+    <!-- RIGHT: Control Sidebar (30%) -->
+    <aside class="sidebar" aria-label="Navigation controls">
+
+      <!-- Source / Destination -->
+      <div class="sidebar-section" id="route-controls">
+        <h4>🧭 Route Finder</h4>
+        <div class="form-group">
+          <label for="src-select">Source Location</label>
+          <select id="src-select" aria-label="Source location"></select>
+        </div>
+        <div class="form-group">
+          <label for="dst-select">Destination Location</label>
+          <select id="dst-select" aria-label="Destination location"></select>
+        </div>
+        <div class="toggle-row">
+          <label class="switch">
+            <input id="wheelchair-toggle" type="checkbox">
+            <span class="slider"></span>
+            ♿ Wheelchair Accessible Route
+          </label>
+        </div>
+        <div class="btn-group">
+          <button id="find-route-btn" class="btn btn-primary">Find Route</button>
+          <button id="clear-route-btn" class="btn btn-ghost">Clear</button>
+        </div>
+      </div>
+
+      <!-- Pathfinding Results -->
+      <div class="sidebar-section" id="route-results">
+        <h4>📊 Pathfinding Results</h4>
+        <div id="results-placeholder" class="results-placeholder">
+          Select a source and destination, then click <strong>Find Route</strong> to compute the shortest path.
+        </div>
+        <div id="results-data" class="hidden">
+          <div class="result-grid">
+            <div class="result-item">
+              <strong id="res-distance">--</strong>
+              <div class="result-label">Meters</div>
+            </div>
+            <div class="result-item">
+              <strong id="res-time">--</strong>
+              <div class="result-label">Minutes</div>
+            </div>
+            <div class="result-item">
+              <strong id="res-nodes">--</strong>
+              <div class="result-label">Nodes</div>
+            </div>
+          </div>
+          <div id="res-path" class="result-path"></div>
+        </div>
+      </div>
+
+      <!-- Quick Navigation -->
+      <div class="sidebar-section">
+        <h4>⚡ Quick Navigate</h4>
+        <div id="quick-nav" class="quick-nav-grid"></div>
+      </div>
+
+      <!-- Building Details -->
+      <div class="sidebar-section">
+        <h4>🏛️ Building Details</h4>
+        <div id="building-details" class="building-info">
+          <p style="color: var(--text-muted); font-size: 0.85rem;">Click a building node on the graph to see its details and connections.</p>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="sidebar-section">
+        <h4>🎨 Legend</h4>
+        <ul class="legend-list">
+          <li><span class="legend-swatch entrance"></span> Entrance</li>
+          <li><span class="legend-swatch department"></span> Department</li>
+          <li><span class="legend-swatch facility"></span> Facility</li>
+          <li><span class="legend-swatch admin"></span> Administrative</li>
+          <li><span class="legend-swatch library"></span> Library</li>
+          <li><span class="legend-swatch office"></span> Office</li>
+          <li><span class="legend-swatch parking"></span> Parking</li>
+          <li><span class="legend-swatch ground"></span> Sports Ground</li>
+          <li><span class="legend-swatch route"></span> Shortest Path</li>
+          <li><span class="legend-swatch inaccessible"></span> Not Wheelchair Accessible</li>
+        </ul>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/static/js/app.js" defer></script>
+  <script src="/static/js/graph.js" defer></script>
+  <script src="/static/js/route.js" defer></script>
+</body>
+</html>
