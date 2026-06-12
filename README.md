@@ -1,4 +1,4 @@
-# CampusSense AI — Smart Campus Navigation System
+# CampusSense AI — Smart Campus Navigation System 
 
 CampusSense AI is a smart campus navigation system built for BIET. It provides an interactive campus map, shortest-path routing between campus locations using Dijkstra's algorithm, and an AI-powered campus assistant to help users find their way around the campus.
  
