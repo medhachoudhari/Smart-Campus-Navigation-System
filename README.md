@@ -52,7 +52,7 @@ PORT=5000
 ```bash
 python app.py
 ```
-The application will be running in debug mode at `http://localhost:5000`.
+The application will be running in debug mode at `http://localhost:xxxx`.
 
 ## Project Structure
 
