@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusSense AI Assistant — Ask questions about BIET campus locations, directions, and facilities using text or voice.">
+  <title>AI Assistant — CampusSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#assistant">Skip to assistant</a>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header class="site-header">
+    <nav class="nav" role="navigation" aria-label="Main Navigation">
+      <div class="nav-left">
+        <a class="brand" href="/">CampusSense AI</a>
+      </div>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">
+        <span class="hamburger"></span>
+      </button>
+      <ul id="nav-menu" class="nav-menu" role="menu">
+        <li role="none"><a role="menuitem" href="/">Home</a></li>
+        <li role="none"><a role="menuitem" href="/campus-map">Campus Map</a></li>
+        <li role="none"><a role="menuitem" href="/assistant" class="active">Voice Assistant</a></li>
+        <li role="none"><a role="menuitem" href="/about">About Project</a></li>
+      </ul>
+      <div class="nav-right">
+        <label class="dark-toggle" title="Toggle dark/light mode">
+          <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== ASSISTANT CONTENT ===== -->
+  <main id="assistant" class="assistant-page">
+    <h1>🤖 Campus Assistant</h1>
+    <p class="assistant-desc">
+      Ask me anything about the BIET campus — locations, directions, departments, facilities, and more.
+      Use the microphone button for voice input.
+    </p>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chat-container">
+      <div class="chat-messages" id="chat-messages" aria-live="polite">
+        <!-- Messages will be added here dynamically -->
+      </div>
+      <div class="chat-input-area">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Ask about campus locations, directions..."
+          autocomplete="off"
+          aria-label="Type your message"
+        >
+        <button class="btn btn-primary" id="chat-send" aria-label="Send message">
+          Send
+        </button>
+      </div>
+    </div>
+
+    <!-- Suggested Questions -->
+    <div style="margin-top: 20px;">
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">Try asking:</p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="quick-btn" onclick="sendMessage('Where is the CSE Department?')">Where is CSE?</button>
+        <button class="quick-btn" onclick="sendMessage('How do I reach the library from the main gate?')">Library directions</button>
+        <button class="quick-btn" onclick="sendMessage('Where is the canteen?')">Canteen location</button>
+        <button class="quick-btn" onclick="sendMessage('Tell me about the placement cell')">Placement Cell</button>
+        <button class="quick-btn" onclick="sendMessage('What is Dijkstra algorithm?')">About Dijkstra</button>
+        <button class="quick-btn" onclick="sendMessage('Tell me about BIET')">About BIET</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating Microphone Button -->
+  <div class="mic-float">
+    <button
+      class="mic-float-btn"
+      id="mic-btn"
+      aria-label="Voice input — Click to speak"
+      title="Click to speak"
+    >
+      🎤
+    </button>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">CampusSense AI</div>
+        <p class="footer-text">Smart Campus Navigation System — BIET Davangere</p>
+      </div>
+      <div class="footer-links">
+        <a href="/campus-map">Campus Map</a>
+        <a href="/about">About</a>
+        <a href="/">Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js" defer></script>
+  <script src="/static/js/assistant.js" defer></script>
+</body>
+</html>
